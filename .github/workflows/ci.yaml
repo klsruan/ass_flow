@@ -1,0 +1,42 @@
+name: Test Flutter App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test_app_desktop_android:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Flutter pub get
+        working-directory: example
+        run: flutter pub get
+
+      - name: Generate FFI bindings
+        working-directory: example
+        run: flutter pub run ffigen
+
+      # Build desktop (Linux/macOS/Windows)
+      - name: Build Desktop App
+        if: matrix.os != 'ubuntu-latest' || matrix.os != 'windows-latest'
+        working-directory: example
+        run: flutter build ${matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows'}
+
+      # Build Android
+      - name: Build Android App
+        working-directory: example
+        run: flutter build apk --debug
+
+      # Run Flutter tests
+      - name: Run Flutter tests
+        working-directory: example
+        run: flutter test
