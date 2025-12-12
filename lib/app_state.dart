@@ -92,6 +92,41 @@ class FFAppState extends ChangeNotifier {
   void updateCurrMetricsStruct(Function(MetricsStruct) updateFn) {
     updateFn(_currMetrics);
   }
+
+  List<SystemFontStruct> _currFonts = [];
+  List<SystemFontStruct> get currFonts => _currFonts;
+  set currFonts(List<SystemFontStruct> value) {
+    _currFonts = value;
+  }
+
+  void addToCurrFonts(SystemFontStruct value) {
+    currFonts.add(value);
+  }
+
+  void removeFromCurrFonts(SystemFontStruct value) {
+    currFonts.remove(value);
+  }
+
+  void removeAtIndexFromCurrFonts(int index) {
+    currFonts.removeAt(index);
+  }
+
+  void updateCurrFontsAtIndex(
+    int index,
+    SystemFontStruct Function(SystemFontStruct) updateFn,
+  ) {
+    currFonts[index] = updateFn(_currFonts[index]);
+  }
+
+  void insertAtIndexInCurrFonts(int index, SystemFontStruct value) {
+    currFonts.insert(index, value);
+  }
+
+  double _currFontSize = 40.0;
+  double get currFontSize => _currFontSize;
+  set currFontSize(double value) {
+    _currFontSize = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

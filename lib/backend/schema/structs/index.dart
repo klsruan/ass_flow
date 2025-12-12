@@ -6,3 +6,4 @@ export 'metrics_struct.dart';
 export 'screen_manager_struct.dart';
 export 'script_info_struct.dart';
 export 'styles_struct.dart';
+export 'system_font_struct.dart';

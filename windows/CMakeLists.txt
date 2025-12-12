@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(aegisub_flow LANGUAGES CXX)
+project(ass_flow LANGUAGES CXX)
 
-set(BINARY_NAME "aegisub_flow")
+set(BINARY_NAME "ass_flow")
 
 cmake_policy(SET CMP0063 NEW)
 

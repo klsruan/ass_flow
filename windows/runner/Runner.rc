@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Aegisub Flow" "\0"
+            VALUE "CompanyName", "AssFlow" "\0"
             VALUE "FileDescription", "A new Flutter project." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "Aegisub Flow" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 Aegisub Flow. All rights reserved." "\0"
-            VALUE "OriginalFilename", "aegisub_flow.exe" "\0"
-            VALUE "ProductName", "Aegisub Flow" "\0"
+            VALUE "InternalName", "AssFlow" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 AssFlow. All rights reserved." "\0"
+            VALUE "OriginalFilename", "ass_flow.exe" "\0"
+            VALUE "ProductName", "AssFlow" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -11,10 +11,12 @@ class EventsStruct extends BaseStruct {
     String? end,
     String? style,
     String? text,
+    bool? commented,
   })  : _start = start,
         _end = end,
         _style = style,
-        _text = text;
+        _text = text,
+        _commented = commented;
 
   // "start" field.
   String? _start;
@@ -44,11 +46,19 @@ class EventsStruct extends BaseStruct {
 
   bool hasText() => _text != null;
 
+  // "commented" field.
+  bool? _commented;
+  bool get commented => _commented ?? false;
+  set commented(bool? val) => _commented = val;
+
+  bool hasCommented() => _commented != null;
+
   static EventsStruct fromMap(Map<String, dynamic> data) => EventsStruct(
         start: data['start'] as String?,
         end: data['end'] as String?,
         style: data['style'] as String?,
         text: data['text'] as String?,
+        commented: data['commented'] as bool?,
       );
 
   static EventsStruct? maybeFromMap(dynamic data) =>
@@ -59,6 +69,7 @@ class EventsStruct extends BaseStruct {
         'end': _end,
         'style': _style,
         'text': _text,
+        'commented': _commented,
       }.withoutNulls;
 
   @override
@@ -78,6 +89,10 @@ class EventsStruct extends BaseStruct {
         'text': serializeParam(
           _text,
           ParamType.String,
+        ),
+        'commented': serializeParam(
+          _commented,
+          ParamType.bool,
         ),
       }.withoutNulls;
 
@@ -103,6 +118,11 @@ class EventsStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        commented: deserializeParam(
+          data['commented'],
+          ParamType.bool,
+          false,
+        ),
       );
 
   @override
@@ -114,11 +134,13 @@ class EventsStruct extends BaseStruct {
         start == other.start &&
         end == other.end &&
         style == other.style &&
-        text == other.text;
+        text == other.text &&
+        commented == other.commented;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([start, end, style, text]);
+  int get hashCode =>
+      const ListEquality().hash([start, end, style, text, commented]);
 }
 
 EventsStruct createEventsStruct({
@@ -126,10 +148,12 @@ EventsStruct createEventsStruct({
   String? end,
   String? style,
   String? text,
+  bool? commented,
 }) =>
     EventsStruct(
       start: start,
       end: end,
       style: style,
       text: text,
+      commented: commented,
     );

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom actions
+
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:dart_ass/dart_ass.dart';
@@ -49,34 +51,10 @@ Future useCachedAssFile() async {
           end: dialog.endTime.toString(),
           style: dialog.styleName,
           text: dialog.text.getAss(),
+          commented: dialog.commented,
         );
       }).toList() ??
       [];
-
-  AssFont font = AssFont(
-    styleName: styles[0].name,
-    fontName: styles[0].fontname,
-    fontSize: styles[0].fontsize.toDouble(),
-    bold: styles[0].bold,
-    italic: styles[0].italic,
-    underline: styles[0].underline,
-    strikeOut: styles[0].strikeout,
-    scaleX: styles[0].scaleX,
-    scaleY: styles[0].scaleY,
-    spacing: styles[0].spacing,
-  );
-  font.init();
-  AssFontMetrics? metrics = font.metrics();
-
-  if (metrics != null) {
-    FFAppState().update(() {
-      FFAppState().currMetrics = MetricsStruct(
-        height: metrics.height,
-        ascender: metrics.ascent,
-        descender: metrics.descent,
-      );
-    });
-  }
 
   final newAssFile = AssDataStruct(
     scriptInfo: scriptInfo,

@@ -1,3 +1,4 @@
+import '/components/font_collection_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -36,6 +37,8 @@ class _HomeWidgetState extends State<HomeWidget> {
             .elementAtOrNull(FFAppState().screen.currSelectedIndex)
             ?.text);
     _model.currTextFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -58,7 +61,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         drawer: Drawer(
-          elevation: 16.0,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -221,28 +223,61 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
                 ],
               ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                    ),
-                    alignment: AlignmentDirectional(-1.0, 0.0),
-                    child: Stack(
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  await showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    useSafeArea: true,
+                    context: context,
+                    builder: (context) {
+                      return GestureDetector(
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                        child: Padding(
+                          padding: MediaQuery.viewInsetsOf(context),
+                          child: FontCollectionWidget(),
+                        ),
+                      );
+                    },
+                  ).then((value) => safeSetState(() {}));
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
                       alignment: AlignmentDirectional(-1.0, 0.0),
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'Get Metrics',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
+                      child: Stack(
+                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Font Collection',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontWeight,
@@ -250,41 +285,34 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 20.0, 0.0),
-                            child: Icon(
-                              Icons.chevron_right_sharp,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24.0,
                             ),
                           ),
-                        ),
-                      ],
+                          Align(
+                            alignment: AlignmentDirectional(1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 20.0, 0.0),
+                              child: Icon(
+                                Icons.chevron_right_sharp,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 1.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryText,
+                    Container(
+                      width: double.infinity,
+                      height: 1.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ].addToStart(SizedBox(height: 60.0)),
+            ].addToStart(SizedBox(height: 30.0)),
           ),
         ),
         body: SafeArea(
