@@ -20,9 +20,6 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Generate FFI bindings
-        run: flutter pub run ffigen
-
       # Build desktop (Linux/macOS/Windows)
       - name: Build Desktop App
         if: matrix.os != 'ubuntu-latest' || matrix.os != 'windows-latest'
