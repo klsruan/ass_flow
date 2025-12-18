@@ -4,23 +4,60 @@ on:
   workflow_dispatch:
 
 jobs:
-  test_app_desktop_android:
-    runs-on: ubuntu-latest
+  ############################
+  # DESKTOP (Linux / Windows / macOS)
+  ############################
+  desktop:
+    name: Desktop (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
 
       - name: Flutter pub get
         run: flutter pub get
 
-      # Build desktop (Linux/macOS/Windows)
+      ############################
+      # Dependencies per OS
+      ############################
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libfreetype6-dev \
+            libgl1-mesa-dev \
+            libgtk-3-dev \
+            ninja-build
+
+      - name: Install macOS dependencies
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install freetype
+
+      - name: Install Windows dependencies
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          choco install -y ninja
+          # Se você usa DLL do FreeType, garanta que ela esteja no PATH
+
+      ############################
+      # Build Desktop
+      ############################
       - name: Build Desktop App
         run: |
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
@@ -31,6 +68,31 @@ jobs:
             flutter build windows --debug
           fi
 
-      # Build Android
+      - name: Run Flutter tests
+        run: flutter test
+
+  ############################
+  # ANDROID (Linux only)
+  ############################
+  android:
+    name: Android (Debug APK)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter pub get
+        run: flutter pub get
+
       - name: Build Android App
         run: flutter build apk --debug
+
+      - name: Run Flutter tests
+        run: flutter test
