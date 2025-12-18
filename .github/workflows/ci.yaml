@@ -24,11 +24,11 @@ jobs:
       - name: Build Desktop App
         run: |
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            flutter build linux
+            flutter build linux --debug
           elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            flutter build macos
+            flutter build macos --debug
           else
-            flutter build windows
+            flutter build windows --debug
           fi
 
       # Build Android
