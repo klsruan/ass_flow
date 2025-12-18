@@ -22,8 +22,14 @@ jobs:
 
       # Build desktop (Linux/macOS/Windows)
       - name: Build Desktop App
-        if: matrix.os != 'ubuntu-latest' || matrix.os != 'windows-latest'
-        run: flutter build ${matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows'}
+        run: |
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            flutter build linux
+          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            flutter build macos
+          else
+            flutter build windows
+          fi
 
       # Build Android
       - name: Build Android App
