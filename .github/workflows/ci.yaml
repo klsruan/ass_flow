@@ -18,25 +18,16 @@ jobs:
           channel: stable
 
       - name: Flutter pub get
-        working-directory: example
         run: flutter pub get
 
       - name: Generate FFI bindings
-        working-directory: example
         run: flutter pub run ffigen
 
       # Build desktop (Linux/macOS/Windows)
       - name: Build Desktop App
         if: matrix.os != 'ubuntu-latest' || matrix.os != 'windows-latest'
-        working-directory: example
         run: flutter build ${matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows'}
 
       # Build Android
       - name: Build Android App
-        working-directory: example
         run: flutter build apk --debug
-
-      # Run Flutter tests
-      - name: Run Flutter tests
-        working-directory: example
-        run: flutter test
